@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.CSalaryMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.CSalary">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="month" jdbcType="TINYINT" property="month" />
+    <result column="salary" jdbcType="INTEGER" property="salary" />
+    <result column="socialinsurance" jdbcType="DECIMAL" property="socialinsurance" />
+    <result column="Medicalinsurance" jdbcType="DECIMAL" property="medicalinsurance" />
+    <result column="housingfund" jdbcType="DECIMAL" property="housingfund" />
+    <result column="tax" jdbcType="DECIMAL" property="tax" />
+    <result column="actualsalary" jdbcType="DECIMAL" property="actualsalary" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="staffid" jdbcType="INTEGER" property="staffid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, year, month, salary, socialinsurance, Medicalinsurance, housingfund, tax, actualsalary, 
+    type, staffid
+  </sql>
+  <select id="selectByExample" parameterType="com.example.demo.entity.CSalaryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from c_salary
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from c_salary
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from c_salary
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.demo.entity.CSalaryExample">
+    delete from c_salary
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.entity.CSalary">
+    insert into c_salary (id, year, month, 
+      salary, socialinsurance, Medicalinsurance, 
+      housingfund, tax, actualsalary, 
+      type, staffid)
+    values (#{id,jdbcType=INTEGER}, #{year,jdbcType=INTEGER}, #{month,jdbcType=TINYINT}, 
+      #{salary,jdbcType=INTEGER}, #{socialinsurance,jdbcType=DECIMAL}, #{medicalinsurance,jdbcType=DECIMAL}, 
+      #{housingfund,jdbcType=DECIMAL}, #{tax,jdbcType=DECIMAL}, #{actualsalary,jdbcType=DECIMAL}, 
+      #{type,jdbcType=TINYINT}, #{staffid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.entity.CSalary">
+    insert into c_salary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+      <if test="salary != null">
+        salary,
+      </if>
+      <if test="socialinsurance != null">
+        socialinsurance,
+      </if>
+      <if test="medicalinsurance != null">
+        Medicalinsurance,
+      </if>
+      <if test="housingfund != null">
+        housingfund,
+      </if>
+      <if test="tax != null">
+        tax,
+      </if>
+      <if test="actualsalary != null">
+        actualsalary,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="staffid != null">
+        staffid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=TINYINT},
+      </if>
+      <if test="salary != null">
+        #{salary,jdbcType=INTEGER},
+      </if>
+      <if test="socialinsurance != null">
+        #{socialinsurance,jdbcType=DECIMAL},
+      </if>
+      <if test="medicalinsurance != null">
+        #{medicalinsurance,jdbcType=DECIMAL},
+      </if>
+      <if test="housingfund != null">
+        #{housingfund,jdbcType=DECIMAL},
+      </if>
+      <if test="tax != null">
+        #{tax,jdbcType=DECIMAL},
+      </if>
+      <if test="actualsalary != null">
+        #{actualsalary,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="staffid != null">
+        #{staffid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.demo.entity.CSalaryExample" resultType="java.lang.Long">
+    select count(*) from c_salary
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update c_salary
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.year != null">
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null">
+        month = #{record.month,jdbcType=TINYINT},
+      </if>
+      <if test="record.salary != null">
+        salary = #{record.salary,jdbcType=INTEGER},
+      </if>
+      <if test="record.socialinsurance != null">
+        socialinsurance = #{record.socialinsurance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.medicalinsurance != null">
+        Medicalinsurance = #{record.medicalinsurance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.housingfund != null">
+        housingfund = #{record.housingfund,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tax != null">
+        tax = #{record.tax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.actualsalary != null">
+        actualsalary = #{record.actualsalary,jdbcType=DECIMAL},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.staffid != null">
+        staffid = #{record.staffid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update c_salary
+    set id = #{record.id,jdbcType=INTEGER},
+      year = #{record.year,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=TINYINT},
+      salary = #{record.salary,jdbcType=INTEGER},
+      socialinsurance = #{record.socialinsurance,jdbcType=DECIMAL},
+      Medicalinsurance = #{record.medicalinsurance,jdbcType=DECIMAL},
+      housingfund = #{record.housingfund,jdbcType=DECIMAL},
+      tax = #{record.tax,jdbcType=DECIMAL},
+      actualsalary = #{record.actualsalary,jdbcType=DECIMAL},
+      type = #{record.type,jdbcType=TINYINT},
+      staffid = #{record.staffid,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.CSalary">
+    update c_salary
+    <set>
+      <if test="year != null">
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        month = #{month,jdbcType=TINYINT},
+      </if>
+      <if test="salary != null">
+        salary = #{salary,jdbcType=INTEGER},
+      </if>
+      <if test="socialinsurance != null">
+        socialinsurance = #{socialinsurance,jdbcType=DECIMAL},
+      </if>
+      <if test="medicalinsurance != null">
+        Medicalinsurance = #{medicalinsurance,jdbcType=DECIMAL},
+      </if>
+      <if test="housingfund != null">
+        housingfund = #{housingfund,jdbcType=DECIMAL},
+      </if>
+      <if test="tax != null">
+        tax = #{tax,jdbcType=DECIMAL},
+      </if>
+      <if test="actualsalary != null">
+        actualsalary = #{actualsalary,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="staffid != null">
+        staffid = #{staffid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.CSalary">
+    update c_salary
+    set year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=TINYINT},
+      salary = #{salary,jdbcType=INTEGER},
+      socialinsurance = #{socialinsurance,jdbcType=DECIMAL},
+      Medicalinsurance = #{medicalinsurance,jdbcType=DECIMAL},
+      housingfund = #{housingfund,jdbcType=DECIMAL},
+      tax = #{tax,jdbcType=DECIMAL},
+      actualsalary = #{actualsalary,jdbcType=DECIMAL},
+      type = #{type,jdbcType=TINYINT},
+      staffid = #{staffid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

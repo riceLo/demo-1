@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.CConstractMapper">
+  <resultMap id="VBaseResultMap" type="com.example.demo.ventity.VConstract">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="maincode" jdbcType="VARCHAR" property="maincode" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="client" jdbcType="TINYINT" property="client" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="contacttel" jdbcType="VARCHAR" property="contacttel" />
+    <result column="deadline" jdbcType="TINYINT" property="deadline" />
+
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+
+    <result column="state" jdbcType="TINYINT" property="state" />
+<!--    <result column="state" jdbcType="DECIMAL" property="state" />-->
+
+    <result column="crediting" jdbcType="DECIMAL" property="crediting" />
+
+    <association property="client" javaType="String" column="client" select="selectDicClient"></association>
+  <association property="state" javaType="String" column="state" select="selectDicState"></association>
+  </resultMap>
+
+
+<select id="selectDicClient" parameterType="byte" resultType="String">
+  	select des from c_dic where tablename='CONSTRACT' and fieldname='CLIENT' and value =#{client}
+  </select>
+
+  <resultMap id="VMoneyAmount" type="com.example.demo.ventity.VMoneyAmount">
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="crediting" jdbcType="DECIMAL" property="crediting" />
+  </resultMap>
+
+  <select id="selectDicState" parameterType="byte" resultType="String">
+  	select des from c_dic where tablename='CONSTRACT' and fieldname='STATE' and value =#{state}
+  </select>
+
+  <select id="selectSumAmount" resultMap="VMoneyAmount">
+    select sum(amount) as amount, sum(crediting) as crediting from c_constract
+  </select>
+
+
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.CConstract">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="maincode" jdbcType="VARCHAR" property="maincode" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="client" jdbcType="TINYINT" property="client" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="contacttel" jdbcType="VARCHAR" property="contacttel" />
+    <result column="deadline" jdbcType="TINYINT" property="deadline" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="crediting" jdbcType="DECIMAL" property="crediting" />
+  </resultMap>
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, maincode, code, name, client, year, contact, contacttel, deadline, amount, state,
+    crediting
+  </sql>
+  <select id="selectByExample" parameterType="com.example.demo.entity.CConstractExample" resultMap="VBaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from c_constract
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from c_constract
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" statementType="CALLABLE">
+        {call P_del_constract(#{id,jdbcType=INTEGER,mode=IN})}
+  </delete>
+
+
+
+  <delete id="deleteByExample" parameterType="com.example.demo.entity.CConstractExample">
+    delete from c_constract
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+
+
+  <insert id="insert" parameterType="com.example.demo.entity.CConstract">
+    insert into c_constract (id, maincode, code,
+      name, client, year,
+      contact, contacttel, deadline,
+      amount, state, crediting
+      )
+    values (#{id,jdbcType=INTEGER}, #{maincode,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{client,jdbcType=TINYINT}, #{year,jdbcType=INTEGER},
+      #{contact,jdbcType=VARCHAR}, #{contacttel,jdbcType=VARCHAR}, #{deadline,jdbcType=TINYINT},
+      #{amount,jdbcType=DECIMAL}, #{state,jdbcType=TINYINT}, #{crediting,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.entity.CConstract"
+          useGeneratedKeys="true"
+          keyProperty="id"
+          keyColumn="id"
+  >
+    insert into c_constract
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="maincode != null">
+        maincode,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="client != null">
+        client,
+      </if>
+      <if test="year != null">
+        year,
+      </if>
+      <if test="contact != null">
+        contact,
+      </if>
+      <if test="contacttel != null">
+        contacttel,
+      </if>
+      <if test="deadline != null">
+        deadline,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="crediting != null">
+        crediting,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="maincode != null">
+        #{maincode,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="client != null">
+        #{client,jdbcType=TINYINT},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="contact != null">
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="contacttel != null">
+        #{contacttel,jdbcType=VARCHAR},
+      </if>
+      <if test="deadline != null">
+        #{deadline,jdbcType=TINYINT},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="crediting != null">
+        #{crediting,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.demo.entity.CConstractExample" resultType="java.lang.Long">
+    select count(*) from c_constract
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update c_constract
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.maincode != null">
+        maincode = #{record.maincode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.client != null">
+        client = #{record.client,jdbcType=TINYINT},
+      </if>
+      <if test="record.year != null">
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.contact != null">
+        contact = #{record.contact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contacttel != null">
+        contacttel = #{record.contacttel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deadline != null">
+        deadline = #{record.deadline,jdbcType=TINYINT},
+      </if>
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=TINYINT},
+      </if>
+      <if test="record.crediting != null">
+        crediting = #{record.crediting,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update c_constract
+    set id = #{record.id,jdbcType=INTEGER},
+      maincode = #{record.maincode,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      client = #{record.client,jdbcType=TINYINT},
+      year = #{record.year,jdbcType=INTEGER},
+      contact = #{record.contact,jdbcType=VARCHAR},
+      contacttel = #{record.contacttel,jdbcType=VARCHAR},
+      deadline = #{record.deadline,jdbcType=TINYINT},
+      amount = #{record.amount,jdbcType=DECIMAL},
+      state = #{record.state,jdbcType=TINYINT},
+      crediting = #{record.crediting,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.CConstract">
+    update c_constract
+    <set>
+      <if test="maincode != null">
+        maincode = #{maincode,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="client != null">
+        client = #{client,jdbcType=TINYINT},
+      </if>
+      <if test="year != null">
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="contact != null">
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="contacttel != null">
+        contacttel = #{contacttel,jdbcType=VARCHAR},
+      </if>
+      <if test="deadline != null">
+        deadline = #{deadline,jdbcType=TINYINT},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="crediting != null">
+        crediting = #{crediting,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.CConstract">
+    update c_constract
+    set maincode = #{maincode,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      client = #{client,jdbcType=TINYINT},
+      year = #{year,jdbcType=INTEGER},
+      contact = #{contact,jdbcType=VARCHAR},
+      contacttel = #{contacttel,jdbcType=VARCHAR},
+      deadline = #{deadline,jdbcType=TINYINT},
+      amount = #{amount,jdbcType=DECIMAL},
+      state = #{state,jdbcType=TINYINT},
+      crediting = #{crediting,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

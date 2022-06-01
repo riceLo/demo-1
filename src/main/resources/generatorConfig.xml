@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <context id="context1" targetRuntime="MyBatis3">
+      <!-- 注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" /><!-- 是否取消注释 -->
+            <property name="suppressDate" value="true" /> <!-- 是否生成注释代时间戳 -->
+        </commentGenerator>
+
+    <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/test?serverTimezone=Asia/Shanghai"
+       driverClass="com.mysql.jdbc.Driver" password="123456"
+         userId="root" >
+         <property name="nullCatalogMeansCurrent" value="true" />
+    </jdbcConnection>
+
+    <javaModelGenerator targetPackage="com.example.demo.entity"
+        targetProject="demo-1/src/main/java">
+          <property name="enableSubPackages" value="true" />
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.example.demo.mapper.xml"
+         targetProject="demo-1/src/main/java">
+	    <property name="enableSubPackages" value="true" />
+	</sqlMapGenerator>
+	<javaClientGenerator targetPackage="com.example.demo.dao"
+	      targetProject="demo-1/src/main/java"
+           type="XMLMAPPER" />
+    <table schema="test" tableName="v_%">
+    </table>
+     <table schema="test" tableName="c_%">
+    </table>
+
+  </context>
+
+</generatorConfiguration>
