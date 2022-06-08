@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-import com.sun.xml.internal.ws.api.message.Attachment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.entity.CAttachment;
 import com.example.demo.service.IAttachmentService;
 
-//
-//@Controller
-//@ResponseBody
 
 @RestController
 @RequestMapping("api/attachment")
