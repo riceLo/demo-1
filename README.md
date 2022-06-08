@@ -8,7 +8,7 @@
 
 1.合同的增删改查
 
-![]([riceLo/demo-1: 测试提交 (github.com)](https://github.com/riceLo/demo-1)\1.png)
+![]([riceLo/demo-1: 测试提交 (github.com)](https://github.com/riceLo/demo-1)/1.png)
 
 ![](C:\Users\rice\Desktop\简历模板\3.png)
 
