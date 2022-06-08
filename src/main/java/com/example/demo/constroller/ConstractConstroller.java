@@ -128,7 +128,6 @@ public class ConstractConstroller {
 			int lastCellNum = row.getLastCellNum() + 2;
 
 			XSSFCell lastCell = row.createCell(lastCellNum);
-			System.out.println("=errMsg="+errMsg);
 			lastCell.setCellValue(errMsg);
 
 
