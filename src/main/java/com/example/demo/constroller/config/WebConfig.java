@@ -26,8 +26,13 @@ public class WebConfig implements WebMvcConfigurer{
 
 	public void addResourceHandlers(ResourceHandlerRegistry registy) {
 		System.out.println(this.fileuploadpath+"========");
-		registy.addResourceHandler("/uploadFile/**","/excel/**").
-		addResourceLocations("file:"+this.fileuploadpath);
+
+		registy.addResourceHandler("/uploadFile/**").
+				addResourceLocations("file:"+this.fileuploadpath);
+
+		registy.addResourceHandler("/excel/**").
+				addResourceLocations("file:"+this.fileuploadpath);
+
 	}
 
 	@Override
