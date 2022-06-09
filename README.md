@@ -10,11 +10,13 @@
 
 ![](img/1.png)
 
-![](C:\Users\rice\Desktop\简历模板\3.png)
+![](img/3.png)
+
+![](img/4.png)
 
 2.附件上传
 
-![](C:\Users\rice\Desktop\简历模板\2.png)
+![](img/2.png)
 
 3.付款里程碑
 
